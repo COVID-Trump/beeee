@@ -54,7 +54,7 @@
     <button onclick="goCrazy()" id="buzzButton">点我发蜂！</button>
 
     <script>
-        let localCount = localStorage.getItem('beeCount') || 0;
+        let localCount = window.localStorage.getItem('beeCount') || 0;
         document.getElementById('localCount').textContent = localCount;
         
         let clickCount = 0;
@@ -64,7 +64,7 @@
         function goCrazy() {
             // 每次点击增加本地计数
             localCount++;
-            localStorage.setItem('beeCount', localCount);
+            window.localStorage.setItem('beeCount', localCount);
             document.getElementById('localCount').textContent = localCount;
             
             const emoji = document.querySelector('.emoji');
