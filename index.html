@@ -96,7 +96,9 @@
                 setTimeout(() => {
                     explosion.remove();
                     button.disabled = false;
-                }, 3000);
+                }, (
+                    (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+                )(1000, 3000);
                 
                 clickCount = 0;
             }
