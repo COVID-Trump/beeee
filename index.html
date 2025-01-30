@@ -54,11 +54,19 @@
     <button onclick="goCrazy()" id="buzzButton">点我发蜂！</button>
 
     <script>
+        let localCount = localStorage.getItem('beeCount') || 0;
+        document.getElementById('localCount').textContent = localCount;
+        
         let clickCount = 0;
         let timeoutId;
         const button = document.getElementById('buzzButton');
 
         function goCrazy() {
+            // 每次点击增加本地计数
+            localCount++;
+            localStorage.setItem('beeCount', localCount);
+            document.getElementById('localCount').textContent = localCount;
+            
             const emoji = document.querySelector('.emoji');
             const bees = ['🐝','🐝','💥','🤯','👑','🍯','🎉'];
             
@@ -112,6 +120,8 @@
         color: #FFD700;
         font-size: 0.8em;
     ">
+        本机发蜂次数: <span id="localCount">0</span>
+        &nbsp;·&nbsp;
         Page Count: 
         <img src="https://badges.toozhao.com/badges/01JJTWH8V3XQFBDXV9GQ214SJ5/green.svg" />
     </div>
