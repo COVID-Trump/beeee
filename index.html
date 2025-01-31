@@ -53,6 +53,19 @@
     <div class="emoji">🐝</div>
     <button onclick="goCrazy()" id="buzzButton">点我发蜂！</button>
 
+    <!-- 页脚计数器 -->
+    <div style="
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        color: #FFD700;
+        font-size: 0.8em;
+    ">
+        本机发蜂次数: <span id="localCount">0</span>
+        &nbsp;·&nbsp;
+        Page Count: 
+        <img src="https://badges.toozhao.com/badges/01JJTWH8V3XQFBDXV9GQ214SJ5/green.svg" />
+    </div>
     <script>
         let localCount = window.localStorage.getItem('beeCount') || 0;
         document.getElementById('localCount').textContent = localCount;
@@ -112,18 +125,5 @@
             }
         }
     </script>
-    <!-- 页脚计数器 -->
-    <div style="
-        position: fixed;
-        bottom: 10px;
-        right: 10px;
-        color: #FFD700;
-        font-size: 0.8em;
-    ">
-        本机发蜂次数: <span id="localCount">0</span>
-        &nbsp;·&nbsp;
-        Page Count: 
-        <img src="https://badges.toozhao.com/badges/01JJTWH8V3XQFBDXV9GQ214SJ5/green.svg" />
-    </div>
 </body>
 </html>
