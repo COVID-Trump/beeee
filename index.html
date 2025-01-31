@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>2🐝 or not 2🐝？</title>
     <style>
         body { 
@@ -12,9 +14,10 @@
         }
         .buzz { 
             color: #FFD700; 
-            font-size: 3em;
-            margin: 20% auto 0;
+            font-size: 2.5em;  /* 调小字号 */
+            margin: 15% auto 0;
             text-shadow: 0 0 10px #FF4500;
+            padding: 0 10px;  /* 防止文字溢出 */
         }
         .emoji { 
             font-size: 5em; 
@@ -30,7 +33,11 @@
             cursor: pointer;
             transition: transform 0.1s;
         }
-        button:active {
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        button:active:not(:disabled) {
             transform: scale(0.95);
         }
         @keyframes shake {
@@ -44,13 +51,35 @@
 <body>
     <h1 class="buzz">2🐝 or not 2🐝？</h1>
     <div class="emoji">🐝</div>
-    <button onclick="goCrazy()">点我发蜂！</button>
+    <button onclick="goCrazy()" id="buzzButton">点我发蜂！</button>
 
+    <!-- 页脚计数器 -->
+    <div style="
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        color: #FFD700;
+        font-size: 0.8em;
+    ">
+        本机发蜂次数: <span id="localCount">0</span>
+        &nbsp;·&nbsp;
+        Page Count: 
+        <img src="https://badges.toozhao.com/badges/01JJTWH8V3XQFBDXV9GQ214SJ5/green.svg" />
+    </div>
     <script>
+        let localCount = window.localStorage.getItem('beeCount') || 0;
+        document.getElementById('localCount').textContent = localCount;
+        
         let clickCount = 0;
         let timeoutId;
+        const button = document.getElementById('buzzButton');
 
         function goCrazy() {
+            // 每次点击增加本地计数
+            localCount++;
+            window.localStorage.setItem('beeCount', localCount);
+            document.getElementById('localCount').textContent = localCount;
+            
             const emoji = document.querySelector('.emoji');
             const bees = ['🐝','🐝','💥','🤯','👑','🍯','🎉'];
             
@@ -73,16 +102,25 @@
                     color: #FF4500;
                     font-size: 2em;
                     position: fixed;
-                    top: 50%;
+                    bottom: 30%;  /* 调整到下方 */
                     left: 50%;
-                    transform: translate(-50%, -50%);
+                    transform: translateX(-50%);
                     text-shadow: 0 0 10px yellow;
                     z-index: 999;
+                    white-space: nowrap;
                 `;
                 explosion.innerHTML = "🐝💥 蜂值爆表！ 💥🐝";
                 document.body.appendChild(explosion);
                 
-                setTimeout(() => explosion.remove(), 3000);
+                // 禁用按钮
+                button.disabled = true;
+                setTimeout(() => {
+                    explosion.remove();
+                    button.disabled = false;
+                }, (
+                    (min, max) => Math.floor(Math.random() * (max - min + 1)) + min
+                )(1000, 3000));
+                
                 clickCount = 0;
             }
         }
